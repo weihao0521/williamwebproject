@@ -6,7 +6,7 @@ module.exports = function(grunt) {
     distFolder: 'target/classes',
     validation: {
       options: {
-        reset: grunt.option('reset') || false,
+        reset: grunt.option('reset') || true,
         stoponerror: false,
         failHard: true,
         generateReport: true,
@@ -14,7 +14,7 @@ module.exports = function(grunt) {
         errorHTMLRootDir: 'w3c',
         path: 'w3c/validation-status.json',
         reportpath: 'w3c/validation-report.json',
-        relaxerror: ['Bad value X-UA-Compatible for attribute http-equiv on element meta.'] //ignores these errors
+        relaxerror: ['The Content-Type was “text/html”. Using the HTML parser.', 'Using the schema for HTML with SVG 1.1, MathML 3.0, RDFa 1.1, and ITS 2.0 support.', 'Bad value X-UA-Compatible for attribute http-equiv on element meta.'] //ignores these errors
       },
       files: {
         src: '<%= srcFolder %>/public/**/*.html'
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       files: ['Gruntfile.js', '<%= srcFolder %>/public/js/**/*.js', '<%= testFolder %>/public/js/**/*.js'],
       options: {
         globals: {
-          jQuery: true,
+          jquery: false,
           console: true,
           module: true
         }
@@ -80,8 +80,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // this would be run by typing "grunt test" on the command line
-  grunt.registerTask('test', ['validation', 'jshint', 'qunit']);
+  grunt.registerTask('test', ['validation', 'jshint']);
 
   // the default task can be run just by typing "grunt" on the command line
-  grunt.registerTask('default', ['validation', 'jshint', 'qunit', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['validation', 'jshint'/*, 'concat', 'uglify', 'cssmin'*/]);
 };
